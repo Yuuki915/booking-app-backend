@@ -10,7 +10,7 @@ const hotelSchema = new mongoose.Schema({
   description: { type: String, required: true },
   rate: { type: Number, min: 0, max: 5 },
   rooms: { type: [String] },
-  ceapest: { type: Number, required: true },
+  cheapest: { type: Number, required: true },
   featured: { type: Boolean, default: false },
 });
 
