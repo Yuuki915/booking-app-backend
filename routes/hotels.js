@@ -1,14 +1,30 @@
 const router = require("express").Router();
-const Hotel = require("../models/Hotel");
+const {
+  createHotel,
+  updateHotel,
+  getHotel,
+  deleteHotel,
+  getAllHotels,
+  countByCity,
+  countByType,
+} = require("../controller/hotel");
+const { verifyAdmin } = require("../utils/verifyToken");
 
-router.post("/", async (req, res) => {
-  const newHotel = new Hotel(req.body);
-  try {
-    const savedHotel = await newHotel.save();
-    res.status(200).json(savedHotel);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+// create
+router.post("/", verifyAdmin, createHotel);
+
+// update
+router.put("/:id", verifyAdmin, updateHotel);
+
+// delete
+router.delete("/:id", verifyAdmin, deleteHotel);
+
+// get
+router.get("/find/:id", getHotel);
+
+// get all
+router.get("/", getAllHotels);
+router.get("/countByCity", countByCity);
+router.get("/countByType", countByType);
 
 module.exports = router;
