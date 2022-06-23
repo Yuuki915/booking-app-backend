@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 // app.use(express.static("public"));
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
@@ -19,6 +21,11 @@ app.get("/", (req, res) => {
   res.send("Hello!!");
 });
 
+app.use((req, res, next) => {
+  next();
+});
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/users", userRoute);
